@@ -1,0 +1,23 @@
+{
+  "build": {
+    "development": {
+      "android": {
+        "autoIncrement": true,
+        "buildType": "apk"
+      }
+    },
+    "preview": {
+      "android": {
+        "autoIncrement": true
+      }
+    },
+    "production": {
+      "android": {
+        "autoIncrement": true
+      }
+    }
+  },
+  "cli": {
+    "appVersionSource": "remote"
+  }
+}

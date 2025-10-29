@@ -1,0 +1,118 @@
+// css/AboutUsStyles.js
+import { StyleSheet, Platform } from "react-native";
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  navbar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: Platform.OS === 'android' ? 50 : 60,
+    paddingHorizontal: 20,
+    paddingBottom: 15,
+    backgroundColor: '#fff',
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  navTitle: {
+    marginLeft: 15,
+    fontSize: 22,
+    fontWeight: '600',
+    fontFamily: 'PlayfairDisplay',
+    color: '#333',
+  },
+  container: {
+    paddingHorizontal: 20,
+    paddingBottom: 50,
+  },
+  heading: {
+    fontSize: 24,
+    fontWeight: '700',
+    fontWeight: '600',
+    fontFamily: 'PlayfairDisplay',
+    marginTop: 25,
+    marginBottom: 12,
+    color: '#222',
+    textAlign: 'center',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+  },
+  goldLine: {
+    height: 4,
+    width: 80,
+    backgroundColor: '#C8A951',
+    alignSelf: 'center',
+    marginBottom: 35,
+    borderRadius: 2,
+  },
+  paragraph: {
+    fontSize: 16,
+    fontWeight: '400',
+    lineHeight: 24,
+    marginBottom: 12,
+    color: '#444',
+    textAlign: 'justify',
+  },
+  image: {
+    width: '100%',
+    height: 200,
+    borderRadius: 12,
+    marginBottom: 20,
+    marginTop: 10,
+  },
+  commitmentRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+    flexWrap: 'wrap',
+  },
+  commitmentBox: {
+    width: '48%',
+    backgroundColor: '#f8f4e3',
+    padding: 15,
+    borderRadius: 12,
+    marginBottom: 15,
+    shadowColor: '#d4af37',
+    shadowOpacity: 0.4,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 5,
+  },
+  commitmentTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    marginBottom: 8,
+    color: '#b8860b',
+    textAlign: 'center',
+  },
+  commitmentDesc: {
+    fontSize: 14,
+    color: '#555',
+    textAlign: 'center',
+    lineHeight: 20,
+  },
+  iconTextRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginVertical: 8,
+    paddingHorizontal: 5,
+  },
+  sectionDesc: {
+    flex: 1,
+    fontSize: 15,
+    color: '#555',
+    lineHeight: 22,
+  },
+  footerText: {
+    marginTop: 35,
+    fontSize: 13,
+    textAlign: 'center',
+    color: '#aaa',
+    fontStyle: 'italic',
+  },
+});
+
+export default styles;
