@@ -1,5 +1,4 @@
-// ContactUs.js - SIMPLER VERSION (walang expo-linking)
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -18,29 +17,33 @@ import styles from './css/ContactUsStyles';
 
 export default function ContactUs({ navigation }) {
   const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [showMap, setShowMap] = useState(false); // toggle map visibility
+  const [isMapSafe, setIsMapSafe] = useState(false); // only render map if safe
 
-  // ✅ SIMPLE LINKING FUNCTION (React Native Linking only)
+  // Check if device can handle geo URI (basic safety check)
+  useEffect(() => {
+    const checkMapAvailability = async () => {
+      try {
+        const supported = await Linking.canOpenURL('geo:0,0?q=0,0');
+        setIsMapSafe(supported);
+      } catch (error) {
+        setIsMapSafe(false);
+      }
+    };
+    checkMapAvailability();
+  }, []);
+
   const openExternalLink = async (url) => {
     try {
-      console.log('Opening URL:', url);
       const supported = await Linking.canOpenURL(url);
-      
       if (supported) {
         await Linking.openURL(url);
       } else {
-        Alert.alert(
-          'Cannot Open Link',
-          'Please make sure you have a browser app installed.',
-          [{ text: 'OK' }]
-        );
+        Alert.alert('Cannot Open Link', 'Please make sure you have a browser app installed.', [{ text: 'OK' }]);
       }
     } catch (error) {
       console.error('Error opening URL:', error);
-      Alert.alert(
-        'Error',
-        'Failed to open link. Please try again.',
-        [{ text: 'OK' }]
-      );
+      Alert.alert('Error', 'Failed to open link. Please try again.', [{ text: 'OK' }]);
     }
   };
 
@@ -49,24 +52,28 @@ export default function ContactUs({ navigation }) {
     openExternalLink(googleMapsUrl);
   };
 
-  const openFacebookPage = () => {
+  const openFacebookPage = async () => {
     const facebookUrl = 'https://www.facebook.com/profile.php?id=100083573612681';
-    openExternalLink(facebookUrl);
-  };
+    try {
+      await Linking.openURL(facebookUrl);
+    } catch (error) {
+      console.error('Error opening Facebook:', error);
+      Alert.alert(
+        'Error',
+        'Cannot open Facebook link. Please check your browser or Facebook app.',
+        [{ text: 'OK' }]
+      );
+    }
+  };  
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <Sidebar 
-        isVisible={sidebarVisible} 
-        setVisible={setSidebarVisible} 
-        navigation={navigation} 
-      />
-      
+      <Sidebar isVisible={sidebarVisible} setVisible={setSidebarVisible} navigation={navigation} />
+
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
-        {/* Header */}
         <View style={styles.headerContainer}>
           <TouchableOpacity onPress={() => setSidebarVisible(true)} style={styles.burgerButton}>
             <Ionicons name="menu" size={28} color="#222" />
@@ -76,11 +83,7 @@ export default function ContactUs({ navigation }) {
 
         <View style={styles.goldLine} />
 
-        {/* Scrollable Content */}
-        <ScrollView 
-          contentContainerStyle={styles.scrollContent} 
-          showsVerticalScrollIndicator={false}
-        >
+        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           {/* Info Section */}
           <View style={styles.infoBox}>
             <Text style={styles.infoTitle}>How to Reach Us</Text>
@@ -105,7 +108,7 @@ export default function ContactUs({ navigation }) {
               <Text style={styles.sectionHeader}>Visit Us</Text>
             </View>
             <Text style={styles.infoText}>P4HJ+9MC, Dao St, Rodriguez (Montalban), 1860 Rizal</Text>
-            
+
             <TouchableOpacity onPress={openGoogleMaps}>
               <Text style={[styles.infoText, styles.linkText]}>View on Google Maps</Text>
             </TouchableOpacity>
@@ -126,30 +129,6 @@ export default function ContactUs({ navigation }) {
                 <FontAwesome name="facebook-square" size={30} color="#777" />
               </TouchableOpacity>
             </View>
-          </View>
-
-          {/* Map Section */}
-          <View style={styles.mapCard}>
-            <View style={styles.mapContainer}>
-                <MapView
-                    style={styles.map}
-                    initialRegion={{
-                    latitude: 14.7284423,
-                    longitude: 121.1316262,
-                    latitudeDelta: 0.01,
-                    longitudeDelta: 0.01,
-                    }}
-                >
-                    <Marker
-                    coordinate={{ latitude: 14.7284423, longitude: 121.1316262 }}
-                    title="Don Elmer's Inn and Resort"
-                    description="P4HJ+9MC, Dao St, Rodriguez (Montalban), 1860 Rizal"
-                    />
-                </MapView>
-            </View>
-            <Text style={styles.locationNote}>
-              Our exact location: P4HJ+9MC, Dao St, Rodriguez (Montalban), 1860 Rizal
-            </Text>
           </View>
 
           <Text style={styles.footerText}>

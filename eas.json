@@ -4,17 +4,21 @@
       "android": {
         "autoIncrement": true,
         "buildType": "apk"
-      }
+      },
+      "distribution": "internal"
     },
     "preview": {
       "android": {
-        "autoIncrement": true
-      }
+        "autoIncrement": true,
+        "buildType": "apk"
+      },
+      "distribution": "internal"
     },
     "production": {
       "android": {
         "autoIncrement": true
-      }
+      },
+      "distribution": "store"
     }
   },
   "cli": {
